@@ -131,7 +131,7 @@ class MolecularDataset(InMemoryDataset):
         split_idx['test'] = perm[int(0.9 * num_data):]
         return split_idx
 
-
+# Test
 if __name__ == "__main__":
     dataset = MolecularDataset(root="./custom_dataset", filename="mol.csv")
     print(dataset)
