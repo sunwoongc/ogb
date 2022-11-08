@@ -12,6 +12,9 @@ import numpy as np
 ### importing OGB
 from ogb.graphproppred import PygGraphPropPredDataset, Evaluator
 
+### Custom Dataset
+from molecular_featurizer import MolecularDataset
+
 cls_criterion = torch.nn.BCEWithLogitsLoss()
 reg_criterion = torch.nn.MSELoss()
 
@@ -93,6 +96,10 @@ def main():
     ### automatic dataloading and splitting
     dataset = PygGraphPropPredDataset(name = args.dataset)
 
+    ### Custom Dataset
+    # dataset = MolecularDataset(root="./custom_dataset", filename="mol.csv")
+    ### TODO: Adding just for now
+    # dataset.data.x = dataset.data.x.to(torch.int64)
     if args.feature == 'full':
         pass 
     elif args.feature == 'simple':

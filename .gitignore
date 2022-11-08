@@ -28,3 +28,4 @@ dataset/
 **/pcqm4m-scaf/**
 **/logs/**
 **/lightning_logs/**
+examples/graphproppred/mol/custom_dataset
