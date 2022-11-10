@@ -1,9 +1,16 @@
-from ogb.utils.features import (allowable_features, atom_to_feature_vector,
-bond_to_feature_vector, atom_feature_vector_to_dict, bond_feature_vector_to_dict) 
+
 from rdkit import Chem
 import numpy as np
 
-import deepchem as dc
+# For debugging (comment out this when training)
+import os
+import sys
+filepath = "/home/tony/ogb/ogb/utils/"
+sys.path.append(filepath)
+from features import atom_to_feature_vector, bond_to_feature_vector
+
+# from ogb.utils.features import (allowable_features, atom_to_feature_vector,
+# bond_to_feature_vector, atom_feature_vector_to_dict, bond_feature_vector_to_dict) 
 
 def smiles2graph(smiles_string):
     """
@@ -13,10 +20,6 @@ def smiles2graph(smiles_string):
     """
 
     mol = Chem.MolFromSmiles(smiles_string)
-
-    featurizer = dc.feat.MolGraphConvFeaturizer()
-    f = featurizer.featurize(smiles_string)
-    print(f[0].node_features[0, 14:16])
 
     # atoms
     atom_features_list = []
