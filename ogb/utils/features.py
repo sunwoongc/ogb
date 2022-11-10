@@ -16,6 +16,7 @@ allowable_features = {
         ],
     'possible_is_aromatic_list': [False, True],
     'possible_is_in_ring_list': [False, True],
+    'possible_valence_list' : list(range(1, 19)) + ['misc'], # added feature
     'possible_bond_type_list' : [
         'SINGLE',
         'DOUBLE',
@@ -65,6 +66,7 @@ def atom_to_feature_vector(atom):
             safe_index(allowable_features['possible_hybridization_list'], str(atom.GetHybridization())),
             allowable_features['possible_is_aromatic_list'].index(atom.GetIsAromatic()),
             allowable_features['possible_is_in_ring_list'].index(atom.IsInRing()),
+            safe_index(allowable_features['possible_valence_list'], atom.GetTotalValence()),
             ]
     return atom_feature
 # from rdkit import Chem
@@ -84,7 +86,8 @@ def get_atom_feature_dims():
         allowable_features['possible_number_radical_e_list'],
         allowable_features['possible_hybridization_list'],
         allowable_features['possible_is_aromatic_list'],
-        allowable_features['possible_is_in_ring_list']
+        allowable_features['possible_is_in_ring_list'],
+        allowable_features['possible_valence_list'],
         ]))
 
 def bond_to_feature_vector(bond):

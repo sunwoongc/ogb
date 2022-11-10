@@ -2,9 +2,16 @@ import torch
 from torch_geometric.nn import MessagePassing
 import torch.nn.functional as F
 from torch_geometric.nn import global_mean_pool, global_add_pool
-from ogb.graphproppred.mol_encoder import AtomEncoder,BondEncoder
-from torch_geometric.utils import degree
+# from ogb.graphproppred.mol_encoder import AtomEncoder,BondEncoder
 
+# For debugging (comment out this when training)
+import os
+import sys
+filepath = "/home/tony/ogb/ogb/graphproppred"
+sys.path.append(filepath)
+from mol_encoder import AtomEncoder, BondEncoder
+
+from torch_geometric.utils import degree
 import math
 
 ### GIN convolution along the graph structure
@@ -107,7 +114,6 @@ class GNN_node(torch.nn.Module):
         x, edge_index, edge_attr, batch = batched_data.x, batched_data.edge_index, batched_data.edge_attr, batched_data.batch
 
         ### computing input node embedding
-
         h_list = [self.atom_encoder(x)]
         for layer in range(self.num_layer):
 

@@ -1,7 +1,9 @@
 from ogb.utils.features import (allowable_features, atom_to_feature_vector,
- bond_to_feature_vector, atom_feature_vector_to_dict, bond_feature_vector_to_dict) 
+bond_to_feature_vector, atom_feature_vector_to_dict, bond_feature_vector_to_dict) 
 from rdkit import Chem
 import numpy as np
+
+import deepchem as dc
 
 def smiles2graph(smiles_string):
     """
@@ -12,11 +14,16 @@ def smiles2graph(smiles_string):
 
     mol = Chem.MolFromSmiles(smiles_string)
 
+    featurizer = dc.feat.MolGraphConvFeaturizer()
+    f = featurizer.featurize(smiles_string)
+    print(f[0].node_features[0, 14:16])
+
     # atoms
     atom_features_list = []
     for atom in mol.GetAtoms():
         atom_features_list.append(atom_to_feature_vector(atom))
     x = np.array(atom_features_list, dtype = np.int64)
+    
 
     # bonds
     num_bond_features = 3  # bond type, bond stereo, is_conjugated
@@ -56,4 +63,4 @@ def smiles2graph(smiles_string):
 
 if __name__ == '__main__':
     graph = smiles2graph('O1C=C[C@H]([C@H]1O2)c3c2cc(OC)c4c3OC(=O)C5=C4CCC(=O)5')
-    print(graph)
+    # print(graph)

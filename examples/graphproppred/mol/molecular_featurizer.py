@@ -46,15 +46,23 @@ class MolecularDataset(InMemoryDataset):
 
             # Convert smiles in to PyG's Data object.
             # Some smiles cannot be featurized (such as [Cd+2] which has only one atom.)
+            """
+            TODO: Change everything encoded as one-hot to numerical feature (why? to use embedding)
+            for example, for Atom type:
+            _x = deepcopy(x[:, 0:9])
+            _x = torch.argmax(_x, dim=1).reshape(-1, 1)
+            """
             try:
                 data = f[0].to_pyg_graph()
+                # Hard coding just for now.
+                
                 data.edge_attr = data.edge_attr.to(torch.float32)
                 data.edge_index = data.edge_index.to(torch.long)
                 # Assign labels(torch.size([1, 128])) to data.y 
                 data.y = torch.tensor(row[:128].to_numpy(dtype=np.float32), dtype=torch.float32).reshape(1, -1) # or torch.from_numpy
+
                 # Adding additional features (node_feats, edge_feats) obtained from rdkit.Chem
                 mol = Chem.MolFromSmiles(row["smiles"])
-                
                 # NOTE: create node_feats, edge_feats attribute to distinguish with x, edge_attr right?
                 data.node_feats = self._get_node_features(mol) # TODO: None Handling
                 data.edge_feats = self._get_edge_features(mol)

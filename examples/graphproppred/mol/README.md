@@ -2,6 +2,10 @@
 
 This repository includes the scripts for GNN baselines for `ogbg-mol*` dataset.
 
+## For custom Dataset
+
+If you want to use custom Dataset, run `molecular_featurizer.py`.
+*It isn't implemented properly yet.*
 ## Training & Evaluation
 
 ```

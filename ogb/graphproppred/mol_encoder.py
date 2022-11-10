@@ -5,7 +5,6 @@ full_atom_feature_dims = get_atom_feature_dims()
 full_bond_feature_dims = get_bond_feature_dims()
 
 class AtomEncoder(torch.nn.Module):
-    # TODO: Why does only int-dtpye work?
     def __init__(self, emb_dim):
         super(AtomEncoder, self).__init__()
         
